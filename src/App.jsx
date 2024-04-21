@@ -1,28 +1,32 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Link, Routes, useParams } from 'react-router-dom';
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes,
+  useParams,
+} from "react-router-dom";
 
 function RepoList() {
   const [repos, setRepos] = useState([]);
 
   useEffect(() => {
-    fetch('https://api.github.com/users/BalezDev/repos')
-      .then(response => response.json())
-      .then(data => setRepos(data))
-      .catch(error => console.error('Error:', error));
+    fetch("https://api.github.com/users/BalezDev/repos")
+      .then((response) => response.json())
+      .then((data) => setRepos(data))
+      .catch((error) => console.error("Error:", error));
   }, []);
-
 
   return (
     <div>
       <h1>Balez GitHub Repositories</h1>
-      {repos.map(repo => (
+      {repos.map((repo) => (
         <p key={repo.id}>
           <Link to={`/repo/${repo.name}`}>{repo.name}</Link>
         </p>
       ))}
-    <button onClick={fetch}>Load more</button>
+      <button onClick={fetch}>Load more</button>
     </div>
   );
 }
@@ -33,9 +37,9 @@ function Repo() {
 
   useEffect(() => {
     fetch(`https://api.github.com/repos/BalezDev/${repoName}`)
-      .then(response => response.json())
-      .then(data => setRepo(data))
-      .catch(error => console.error('Error:', error));
+      .then((response) => response.json())
+      .then((data) => setRepo(data))
+      .catch((error) => console.error("Error:", error));
   }, [repoName]);
 
   if (!repo) return <div>Loading...</div>;
@@ -53,10 +57,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/repo" element={<Repo />}>
-        </Route>
-        <Route path="/" element={<RepoList />}>
-        </Route>
+        <Route path="/repo" element={<Repo />}></Route>
+        <Route path="/" element={<RepoList />}></Route>
       </Routes>
     </Router>
   );
