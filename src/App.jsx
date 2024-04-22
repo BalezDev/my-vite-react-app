@@ -8,16 +8,19 @@ import {
   useParams,
 } from "react-router-dom";
 import ErrorBoundary from "./components/Navbar/Errorboundary";
+import PageNotFound from "./pages/404page";
 
 function RepoList() {
   const [repos, setRepos] = useState([]);
   const [page, setPage] = useState(1);
 
   const fetchRepos = async () => {
-    const response = await fetch(`https://api.github.com/users/BalezDev/repos?page=${page}&per_page=100`);
+    const response = await fetch(
+      `https://api.github.com/users/BalezDev/repos?page=${page}&per_page=100`
+    );
     const data = await response.json();
-    setRepos(prevRepos => [...prevRepos, ...data]);
-    setPage(prevPage => prevPage + 1);
+    setRepos((prevRepos) => [...prevRepos, ...data]);
+    setPage((prevPage) => prevPage + 1);
   };
 
   useEffect(() => {
@@ -71,12 +74,12 @@ function Repo() {
   if (!repo) return <div>Loading...</div>;
 
   return (
-    <ErrorBoundary fallback = "Error">
-    <div>
-      <h1>{repo.name}</h1>
-      <p>{repo.description}</p>
-      <a href={repo.html_url}>View on GitHub</a>
-    </div>
+    <ErrorBoundary fallback="Error">
+      <div>
+        <h1>{repo.name}</h1>
+        <p>{repo.description}</p>
+        <a href={repo.html_url}>View on GitHub</a>
+      </div>
     </ErrorBoundary>
   );
 }
@@ -87,6 +90,7 @@ function App() {
       <Routes>
         <Route path="/repo" element={<Repo />}></Route>
         <Route path="/" element={<RepoList />}></Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
   );
