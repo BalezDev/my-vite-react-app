@@ -7,6 +7,7 @@ import {
   Routes,
   useParams,
 } from "react-router-dom";
+import ErrorBoundary from "./components/Navbar/Errorboundary";
 
 function RepoList() {
   const [repos, setRepos] = useState([]);
@@ -55,12 +56,14 @@ function Repo() {
 
 function App() {
   return (
+    <ErrorBoundary fallback = "Error">
     <Router>
       <Routes>
         <Route path="/repo" element={<Repo />}></Route>
         <Route path="/" element={<RepoList />}></Route>
       </Routes>
     </Router>
+    </ErrorBoundary>
   );
 }
 
