@@ -40,26 +40,6 @@ function RepoList() {
   );
 }
 
-//   useEffect(() => {
-//     fetch("https://api.github.com/users/BalezDev/repos")
-//       .then((response) => response.json())
-//       .then((data) => setRepos(data))
-//       .catch((error) => console.error("Error:", error));
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>Balez GitHub Repositories</h1>
-//       {repos.map((repo) => (
-//         <p key={repo.id}>
-//           <Link to={`/repo/${repo.name}`}>{repo.name}</Link>
-//         </p>
-//       ))}
-//       <button onClick={fetch}>Load more</button>
-//     </div>
-//   );
-// }
-
 function Repo() {
   const { repoName } = useParams();
   const [repo, setRepo] = useState(null);
@@ -88,7 +68,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/repo" element={<Repo />}></Route>
+        <Route path="/repo/:repoName" element={<Repo />}></Route>
         <Route path="/" element={<RepoList />}></Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
